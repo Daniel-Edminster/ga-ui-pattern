@@ -7,6 +7,7 @@ let dxid;
 let pkmnContainer;
 let sprite;
 let img;
+let dexArray = [];
 
 function getPokemonByDexNumber(dxNm)
 {
@@ -21,7 +22,7 @@ function orderPokemonByDexNumber()
     // console.log(pool);
     let poolArray = Array.prototype.slice.call(pool, 0);
 
-    console.log(poolArray[0].dataset.dexnum);
+    // console.log(poolArray[0].dataset.dexnum);
 
 }
 
@@ -45,8 +46,10 @@ function renderSinglePokemon(url, dexNum)
 
         pkmnContainer.appendChild(img);
 
-
-        document.querySelector("#pkmn").appendChild(pkmnContainer);
+        
+        dexArray[dexNum] = pkmnContainer.outerHTML;
+        // console.log(dexArray[dexNum]);
+        // document.querySelector("#pkmn").appendChild(pkmnContainer);
         // console.log(sprite);
         // return sprite;
     })
@@ -55,7 +58,7 @@ function renderSinglePokemon(url, dexNum)
 
 function fetchKantoPokemon()
 {
-    fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=251')
     .then(response => response.json())
     .then(allpokemon => {
 
@@ -87,7 +90,13 @@ function fetchKantoPokemon()
 
 fetchKantoPokemon();
 setTimeout(() => {
-    orderPokemonByDexNumber();
-}, 5000);
+    // orderPokemonByDexNumber();
+    document.querySelector("#pkmn").innerHTML="";
+    document.querySelector(".modal-gallery").removeAttribute("style");
+    for(let i=1;i<dexArray.length;i++)
+    {
+        document.querySelector("#pkmn").innerHTML += dexArray[i] + "\n";
+    }
+}, 2000);
 
 
