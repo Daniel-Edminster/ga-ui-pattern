@@ -4,6 +4,39 @@ let apk;
 let pkmnLength;
 let dexNum;
 let pkmnContainer;
+let sprite;
+let img;
+
+function renderSinglePokemon(url)
+{
+    fetch(url)
+    .then(response => response.json())
+    .then(singlePokemon => {
+
+        // console.log(singlePokemon);
+        sprite = singlePokemon.sprites.front_default;
+
+        img = document.createElement("img");
+        img.setAttribute("src", sprite);
+        img.className = "sprite";
+
+        pkmnContainer = document.createElement("div");
+        pkmnContainer.className="pkmnContainer";
+        pkmnContainer.id=`dex-${dexNum}`;
+
+        pkmnContainer.appendChild(img);
+
+
+
+       
+
+        document.querySelector("#pkmn").appendChild(pkmnContainer);
+        // console.log(sprite);
+        // return sprite;
+    })
+  
+}
+
 function fetchKantoPokemon()
 {
     fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
@@ -11,37 +44,29 @@ function fetchKantoPokemon()
     .then(allpokemon => {
 
         pkmnLength = allpokemon.results.length;
-        console.log(pkmnLength);
+        // console.log(pkmnLength);
+        // console.log(allpokemon);
+
+
   
         for(let i=0;i<pkmnLength;i++)
         {
-            console.log(i);
             dexNum = i+1;
-            pkmnContainer = document.createElement("div");
-            pkmnContainer.className="pkmnContainer";
-            pkmnContainer.id=`dex-${dexNum}`;
 
-            document.querySelector("#pkmn").appendChild(pkmnContainer);
+
+            renderSinglePokemon(allpokemon.results[i].url);
+
+            // img.setAttribute("src", sprite);
+
+
         }
   
   
     });
         
-        // {
-        // pkmnLength = allpokemon.results.length;
-
-        // for(let i=0;i<pkmnLength;i++)
-        // {
-        //     dexNum = i+1;
-        //     pkmnContainer = document.createElement("div");
-        //     pkmnContainer.className="pkmnContainer";
-        //     pkmnContainer.id=`dex-${dexNum}`;
-
-        //     document.querySelector("#pkmn").appendChild(pkmnContainer);
-        // }
-    // }
-    // );
 }
+
+
 
 fetchKantoPokemon();
 
