@@ -112,6 +112,10 @@ a {
 
 .pkmnContainer:hover {
     border: 1px solid red;
+    /* transform: translateY(-.1em); */
+    transform: scale(1.1);
+    /* transform: translateZ(90deg); */
+    cursor: pointer;
 }
 
 .sprite {
@@ -142,8 +146,123 @@ a {
     height: 90%;
     border: 3px solid #FFF;
     border-radius: 1em;
-    padding: 1em 1em;
+    /* padding: 1em 1em; */
     box-shadow: 0 2x 2px rgba(0,0,0,.7);
     /* background: #FFF; */
     background: #DC0A2D;
+}
+
+.modal-screen-left {
+    background: #010101;
+    /* background: #072401; */
+    max-width: 400px;
+    width:200px;
+    max-height: 40vh;
+    border: 3px solid #494949;
+    color: white;
+    overflow: hidden;
+    text-shadow: 0 0 5px #C8C8C8;
+    margin: 0 auto;
+    border-radius: 1em;
+    
+}
+
+.modal-screen-left-container {
+    background: #b0b0b0;
+    border-radius: .8em;
+    width: 240px;
+    padding-top: 18px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-bottom: 30px;
+    box-shadow: 0 2x 2px rgba(0,0,0,.7);
+    
+}
+
+.dex-screen-sprite {
+    /* width: 25%; */
+    width: 192px;
+    /* border: 1px solid red; */
+    display: block;
+    margin: auto auto;
+
+}
+
+.spritebg {
+    background: url("../img/spritebg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75%;
+}
+
+.dex-box-curve {
+    /* background: #010101; */
+    border-right: 3px solid #FFF;
+    border-bottom: 3px solid #FFF;
+    border-radius: 1em 0 2em 0;
+    width: 250px;
+    min-height: 4em;
+    top: 0;
+    left: 0;
+
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#202123+2,000000+100 */
+    background: #202123; /* Old browsers */
+    background: -moz-linear-gradient(top,  #202123 2%, #000000 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #202123 2%,#000000 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #202123 2%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#202123', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+
+}
+
+.dex-box-blue-circle {
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#a9e4f7+0,0fb4e7+100;Ble+3D+%235 */
+    background: #a9e4f7; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #a9e4f7 0%, #0fb4e7 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover,  #a9e4f7 0%,#0fb4e7 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center,  #a9e4f7 0%,#0fb4e7 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9e4f7', endColorstr='#0fb4e7',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+
+
+    border-radius: 50%;
+    border: 3px solid #FFF;
+    min-height: 3em;
+    min-width: 3em;
+    max-height: 3em;
+    max-width: 3em;
+    margin-left: .4em;
+    margin-top: .4em;
+    display: inline-block;
+}
+
+hr {
+    /* color: #494949; */
+    background: #494949;
+    height: .2em;
+    width: 80%;
+    margin: 5px auto 5px auto;
+    border: none;
+}
+
+.flavorText {
+    color: white;
+    font-family: 'pkmn_rbygscregular', 'Courier New', Courier;
+    font-size: .5em;
+    padding: 1.3em;
+    background: #010101;
+    border: 3px solid #494949;
+    border-radius: 2em;
+    text-shadow: 0 0 5px #C8C8C8;
+}
+
+.small-red-dot {
+    background: rgb(251,110,110);
+    background: radial-gradient(circle, rgba(251,110,110,1) 14%, rgba(251,52,52,1) 100%);
+
+    border-radius: 50%;
+    min-height: 12px;
+    min-width: 12px;
+    max-height: 12px;
+    max-width: 12px;
+    display: inline-block;
 }
