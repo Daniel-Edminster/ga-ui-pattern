@@ -319,3 +319,101 @@ hr {
     /* font-size: .5em; */
 
 }
+
+.spriteContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-content: center;
+    justify-items: center;
+    height: 100%;
+    
+}
+
+.spriteDisplay {
+    /* float: left; */
+    display: none;
+    /* border: 1px solid red; */
+
+  
+}
+
+.spriteDisplayActive {
+    display: flex;
+    float: none;
+
+}
+
+
+
+i {
+    border: solid #fff;
+    border-width: 0 .6em .6em 0;
+    display: inline-block;
+    padding: .6em;
+  }
+
+i:hover {
+    border: solid yellowgreen;
+    border-width: 0 .6em .6em 0;
+}
+
+  
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+  
+  .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+  
+  .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
+  .arrow {
+      /* background: rgba(0,0,0,0.5); */
+      color: black;
+      align-self: center;
+
+
+  }
+
+  .arrowContainer {
+      /* align-content: center; */
+      align-self: center;
+  }
+
+  .pokeSprite {
+      align-self: center;
+      /* border: 1px solid red; */
+      width: 192px;
+
+      align-content: center;
+  }
+
+  .pokeSprite  img {
+      display: block;
+      /* margin: auto auto; */
+      margin-top: 50%;
+      width: 200%;
+      /* align-self: center; */
+      
+  }
+
+  .spritebg {
+    background: url("../img/spritebg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    /* border: 1px solid blue; */
+    height: 100%;
+}

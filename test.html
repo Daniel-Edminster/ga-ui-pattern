@@ -1,12 +1,30 @@
 <html>
     <head>
         <link href="css/fonts.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/scanlines.css" />
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
 
         <script src="js/class.pokemon.js"></script>
 
+
         <!-- <script src="js/p.pokemon.js"></script> -->
     </body>
+
+    <script>
+        window.onload = () => {
+
+            setTimeout(() => {
+                let pk = document.querySelector(".spriteContainer");
+             pk.style.minWidth="400px";
+             pk.style.minHeight="400px";
+                
+            }, 3000);
+
+
+        }
+
+        </script>
+
 </html>

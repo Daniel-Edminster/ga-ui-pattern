@@ -8,15 +8,71 @@ class Pokemon {
         this.baseURL = "https://pokeapi.co/api/v2/";
         this.dexNum = dexNum;
         this.fetchURL = `${this.baseURL}pokemon/${this.dexNum}/`;
-        // this.flavorText = "";
-        // this.sprite = "";
-        // this.details = "";
-        this.isSet = 0;
-        // this.species = "";
+        this.spriteIndex = [];
+
+        this.iterator = 0;
+        this.decrementer = 0;
+
+        // console.log(typeof this.iterator);
 
 
-        this.getAllDetails();
-        // this.getSpecies();
+    }
+
+    goToNextSprite()
+    {
+
+        if(!this.iterator)
+        {
+            this.iterator = 0;
+        }
+
+        let currentSpriteNode = document.querySelector(".spriteDisplayActive");
+        let numSpriteNodes = document.querySelector(".pokeSprite").childNodes.length;
+
+        if(this.iterator === numSpriteNodes -1)
+        {
+            this.iterator = 0;
+
+            let currentSpriteNode = document.querySelector(".spriteDisplayActive");
+            currentSpriteNode.classList.remove("spriteDisplayActive");
+
+            currentSpriteNode = document.querySelectorAll(".spriteDisplay")[0];
+            currentSpriteNode.classList.add("spriteDisplayActive");
+        
+        }
+        else  {
+            // console.log("<=4");
+            // console.log(currentSpriteNode);
+            currentSpriteNode.nextSibling.classList.add("spriteDisplayActive");
+            currentSpriteNode.classList.remove("spriteDisplayActive");
+
+            this.iterator++;
+            // console.log(this.iterator);
+        }
+
+    }
+
+    goToPreviousSprite()
+    {
+        
+        let currentSpriteNode = document.querySelector(".spriteDisplayActive");
+        let numSpriteNodes = document.querySelector(".pokeSprite").childNodes.length;
+
+        if(!this.iterator)
+        {
+            this.iterator = 0;
+        }
+
+        if(this.iterator === 0)
+        {
+            let nextSpriteNode = document.querySelectorAll(".spriteDisplay")[numSpriteNodes-1];
+            currentSpriteNode.classList.remove("spriteDisplayActive");
+            nextSpriteNode.classList.add("spriteDisplayActive");
+            
+        }
+
+        
+
 
 
     }
@@ -39,13 +95,10 @@ class Pokemon {
                     this.species = res2;
                     return this.species;
                 })
-            // this.details.flavorText =
+
             return this.details;
         });
-
-        
-
-        // this.getFlavorText();
+    
     }
 
     async getSpecies()
@@ -92,47 +145,96 @@ class Pokemon {
         let vars2  =  await this.getSpecies();
 
         console.log(this);
-        // console.log(this, vars2);
-        // console.log(vars);
-  
-            // console.log("waiting...");
-            let divName = document.createElement("div");
-            divName.className="pokeName";
-            let name = this.details.name.capitalize();
-            // console.log(name.capitalize());
-            divName.innerHTML = name;
-            let divFlavorText = document.createElement("div");
-            divFlavorText.className="flavorText";
-            divFlavorText.innerHTML= await this.getEnglishFlavorText();
+
+        //NAME
+        let divName = document.createElement("div");
+        divName.className="pokeName";
+        let name = this.details.name.capitalize();
+
+        //FLAVOR TEXT
+        divName.innerHTML = name;
+        let divFlavorText = document.createElement("div");
+        divFlavorText.className="flavorText";
+        divFlavorText.innerHTML= await this.getEnglishFlavorText();
+
+        //SPRITES
+        this.spriteIndex.push(this.details.sprites.front_default);
+        this.spriteIndex.push(this.details.sprites.back_default);
+        this.spriteIndex.push(this.details.sprites.front_shiny);
+        this.spriteIndex.push(this.details.sprites.back_shiny);
+
+        let divSpriteContainer = document.createElement("div");
+        divSpriteContainer.className = "spriteContainer modal-screen-left scanlines";
+
+        let leftArrow = document.createElement("div");
+        leftArrow.className = "arrowContainer";
+        leftArrow.innerHTML = "<i class=\"arrow left\"></i>";
+        let rightArrow = document.createElement("div");
+        rightArrow.className = "arrowContainer";
+        rightArrow.innerHTML = "<i class=\"arrow right\"></i>";
+
+        leftArrow.addEventListener("click", this.goToPreviousSprite);
+        rightArrow.addEventListener("click", this.goToNextSprite);
 
 
 
+        let divSprite = document.createElement("div");
+        divSprite.className = "pokeSprite spritebg";
 
-            // let abilities1 = this.details.abilities[0];
 
-            if(Array.isArray(this.details.abilities))
+        for(let x=0;x<this.spriteIndex.length;x++)
+        {
+            let divSpriteDisplay = document.createElement("div");
+            let imgSprite = document.createElement("img");
+            imgSprite.setAttribute("src", this.spriteIndex[x]);
+            divSpriteDisplay.className = "spriteDisplay";
+
+            if(x === 0)
             {
-                for(let i=0;i<this.details.abilities.length;i++)
-                {
-                    console.log(this.details.abilities[i].ability.name);
-                }
+                divSpriteDisplay.classList.add("spriteDisplayActive");
+            }
+            else {
+
             }
 
-            
-            document.body.appendChild(divName);
-            document.body.appendChild(divFlavorText);
+            divSpriteDisplay.appendChild(imgSprite);
+            divSprite.appendChild(divSpriteDisplay); 
+            divSpriteContainer.appendChild(leftArrow);  
+            divSpriteContainer.appendChild(divSprite);
+            divSpriteContainer.appendChild(rightArrow); 
+
+        }
 
 
+        //ABILITIES
+
+        let divAbilities = document.createElement("div");
+        divAbilities.className = "abilities";
+
+        let abilityItem;
+        if(Array.isArray(this.details.abilities))
+        {
+            for(let i=0;i<this.details.abilities.length;i++)
+            {
+                abilityItem = document.createElement("div");
+                abilityItem.className= "abilityItem";
+                abilityItem.setAttribute("data-ability-index", i);
+                abilityItem.innerHTML = this.details.abilities[i].ability.name;
+                divAbilities.appendChild(abilityItem);
+
+            }
+        }
+
+        document.body.appendChild(divSpriteContainer);
+        document.body.appendChild(divName);
+        document.body.appendChild(divFlavorText);
+        document.body.appendChild(divAbilities);
 
     }
 
 }
 
 
-let bulbasaur = new Pokemon(25);
+let bulbasaur = new Pokemon(6);
 bulbasaur.getAllDetails();
-// let timer = 0;
-
-// if(bulbasaur.details)
-
 bulbasaur.renderDOM();

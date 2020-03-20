@@ -24,6 +24,7 @@
 - Use localstorage to cache all sprites using an HTML `canvas` and `dataURL` 
 - Initiate caching of all assets in the background using a `worker()`
 - Create other pages like AttackDex and ItemDex to utilize Accordion UI/other UI Patterns
+- Add Pokemon Cries, map them to their data object, and make them playable (requires separate API)
     
 
 
