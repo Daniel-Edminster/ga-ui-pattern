@@ -70,10 +70,11 @@ class Pokemon {
 
         let vars  = await this.getAllDetails();
         // let vars2 = await this.getTypes();
-        // let vars2  =  await this.getSpecies();
+        let vars2  =  await this.getSpecies();
 
-        // console.log(this, vars2);
         console.log(this);
+        // console.log(this, vars2);
+        // console.log(vars);
   
             // console.log("waiting...");
             let divName = document.createElement("div");
@@ -83,7 +84,23 @@ class Pokemon {
             divName.innerHTML = name;
             let divFlavorText = document.createElement("div");
             divFlavorText.className="flavorText";
+            divFlavorText.innerHTML= this.species.flavor_text_entries[1].flavor_text;
 
+
+            let abilities = this.details.abilities;
+
+            let abilityElements;
+
+            if(Array.isArray(abilities))
+            {
+                for(let i=0;i<abilities.length;i++)
+                {
+                    abilityElements[i] = document.createElement("div");
+                    abilityElements[i].className="pkmnAbilities";
+                    abilityElements[i].innerHTML = abilityElements[i].ability.name;
+                    document.body.appendChild(abilityElements[i]);
+                }
+            }
 
             // divFlavorText.innerHTML = this.details.flavor_text_entries[1].flavor_text;
             // console.log(this.species.flavor_text_entries[1].flavor_text);
@@ -99,8 +116,8 @@ class Pokemon {
 
 
 let bulbasaur = new Pokemon(151);
-// bulbasaur.getAllDetails();
-let timer = 0;
+bulbasaur.getAllDetails();
+// let timer = 0;
 
 // if(bulbasaur.details)
 
