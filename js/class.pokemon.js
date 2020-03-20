@@ -65,6 +65,25 @@ class Pokemon {
 
     }
 
+    getEnglishFlavorText()
+    {
+        let received = 0;
+        let err = "Flavor text not found";
+        for(let i=0;i<this.species.flavor_text_entries.length;i++)
+        {
+            // console.log(this.species.flavor_text_entries[i].language);
+   
+             if(this.species.flavor_text_entries[i].language.name === "en")
+                {   
+                    received = 1;
+                    return this.species.flavor_text_entries[i].flavor_text;
+                }
+        
+        }
+        
+        return err;
+    }
+
     async renderDOM()
     {
 
@@ -84,26 +103,18 @@ class Pokemon {
             divName.innerHTML = name;
             let divFlavorText = document.createElement("div");
             divFlavorText.className="flavorText";
-            divFlavorText.innerHTML= this.species.flavor_text_entries[1].flavor_text;
+            divFlavorText.innerHTML= await this.getEnglishFlavorText();
 
 
-            let abilities = this.details.abilities;
 
-            let abilityElements;
 
-            if(Array.isArray(abilities))
+            // let abilities1 = this.details.abilities[0];
+
+            if(Array.isArray(this.details.abilities))
             {
-                for(let i=0;i<abilities.length;i++)
-                {
-                    abilityElements[i] = document.createElement("div");
-                    abilityElements[i].className="pkmnAbilities";
-                    abilityElements[i].innerHTML = abilityElements[i].ability.name;
-                    document.body.appendChild(abilityElements[i]);
-                }
+                console.log(...this.details.abilities);
             }
 
-            // divFlavorText.innerHTML = this.details.flavor_text_entries[1].flavor_text;
-            // console.log(this.species.flavor_text_entries[1].flavor_text);
             
             document.body.appendChild(divName);
             document.body.appendChild(divFlavorText);
@@ -115,7 +126,7 @@ class Pokemon {
 }
 
 
-let bulbasaur = new Pokemon(151);
+let bulbasaur = new Pokemon(25);
 bulbasaur.getAllDetails();
 // let timer = 0;
 
