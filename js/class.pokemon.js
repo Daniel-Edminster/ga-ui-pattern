@@ -112,7 +112,10 @@ class Pokemon {
 
             if(Array.isArray(this.details.abilities))
             {
-                console.log(...this.details.abilities);
+                for(let i=0;i<this.details.abilities.length;i++)
+                {
+                    console.log(this.details.abilities[i].ability.name);
+                }
             }
 
             
