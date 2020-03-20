@@ -1,7 +1,7 @@
 ## UI Pattern Project using Pokemon API
 <hr>
 
-<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" style="float: left; display: inline;"> This is a simple pokedex using the [Pokemon API](https://pokeapi.co) using Pokemon themed colors. Integrates modals, tabs, some CSS animation, asynchronous functions, with an OOP style.
+![Pokemon: Pikachu](https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png) This is a simple pokedex using the [Pokemon API](https://pokeapi.co) using Pokemon themed colors. Integrates modals, tabs, some CSS animation, asynchronous functions, with an OOP style.
 
 <hr>
 
