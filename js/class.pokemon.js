@@ -10,70 +10,59 @@ class Pokemon {
         this.fetchURL = `${this.baseURL}pokemon/${this.dexNum}/`;
         this.spriteIndex = [];
 
-        this.iterator = 0;
-        this.decrementer = 0;
-
-        // console.log(typeof this.iterator);
-
-
     }
 
     goToNextSprite()
     {
+        let spriteNodes = document.querySelectorAll(".spriteDisplay");
+        let activeSpriteNode = document.querySelector(".spriteDisplayActive");
+        let activeSpriteNodeIndex = activeSpriteNode.getAttribute("data-spriteindex");
+        let numSpriteNodes = spriteNodes.length;
+        let nextSpriteIndex = parseInt(activeSpriteNodeIndex) + 1;
 
-        if(!this.iterator)
-        {
-            this.iterator = 0;
-        }
+        if(nextSpriteIndex === numSpriteNodes) nextSpriteIndex = 0;
 
-        let currentSpriteNode = document.querySelector(".spriteDisplayActive");
-        let numSpriteNodes = document.querySelector(".pokeSprite").childNodes.length;
-
-        if(this.iterator === numSpriteNodes -1)
-        {
-            this.iterator = 0;
-
-            let currentSpriteNode = document.querySelector(".spriteDisplayActive");
-            currentSpriteNode.classList.remove("spriteDisplayActive");
-
-            currentSpriteNode = document.querySelectorAll(".spriteDisplay")[0];
-            currentSpriteNode.classList.add("spriteDisplayActive");
-        
-        }
-        else  {
-            // console.log("<=4");
-            // console.log(currentSpriteNode);
-            currentSpriteNode.nextSibling.classList.add("spriteDisplayActive");
-            currentSpriteNode.classList.remove("spriteDisplayActive");
-
-            this.iterator++;
-            // console.log(this.iterator);
-        }
+        let nextActiveSpriteNode = document.querySelector(`[data-spriteindex="${nextSpriteIndex}"]`);
+        activeSpriteNode.classList.remove("spriteDisplayActive");
+        nextActiveSpriteNode.classList.add("spriteDisplayActive");
 
     }
 
     goToPreviousSprite()
     {
-        
-        let currentSpriteNode = document.querySelector(".spriteDisplayActive");
-        let numSpriteNodes = document.querySelector(".pokeSprite").childNodes.length;
+        let spriteNodes = document.querySelectorAll(".spriteDisplay");
+        let activeSpriteNode = document.querySelector(".spriteDisplayActive");
+        let activeSpriteNodeIndex = activeSpriteNode.getAttribute("data-spriteindex");
+        let numSpriteNodes = spriteNodes.length;
+        let nextSpriteIndex = parseInt(activeSpriteNodeIndex) - 1;
 
-        if(!this.iterator)
-        {
-            this.iterator = 0;
-        }
-
-        if(this.iterator === 0)
-        {
-            let nextSpriteNode = document.querySelectorAll(".spriteDisplay")[numSpriteNodes-1];
-            currentSpriteNode.classList.remove("spriteDisplayActive");
-            nextSpriteNode.classList.add("spriteDisplayActive");
-            
-        }
-
-        
+        if(nextSpriteIndex < 0) nextSpriteIndex = numSpriteNodes - 1;
 
 
+        let nextActiveSpriteNode = document.querySelector(`[data-spriteindex="${nextSpriteIndex}"]`);
+        activeSpriteNode.classList.remove("spriteDisplayActive");
+        nextActiveSpriteNode.classList.add("spriteDisplayActive");
+
+    }
+
+
+    assignSpriteIndices()
+    {
+        //TODO: move all sprite DOM code here..
+
+
+        // let spriteNodes = document.querySelectorAll(".spriteDisplay");
+        // let numSpriteNodes = spriteNodes.length;
+
+        // //assign all nodes data attributes if it hasn't been done already
+        // if(!spriteNodes[0].getAttribute("data-spriteIndex"))
+        // {
+        //     console.log("attribute not found");
+        //     for(let i=0;i<spriteNodes.length;i++)
+        //     {
+        //         spriteNodes[i].setAttribute("data-spriteIndex", i);
+        //     }   
+        // }
 
     }
 
@@ -141,10 +130,10 @@ class Pokemon {
     {
 
         let vars  = await this.getAllDetails();
-        // let vars2 = await this.getTypes();
         let vars2  =  await this.getSpecies();
 
         console.log(this);
+        console.log(this.currentIndex, this.nextIndex);
 
         //NAME
         let divName = document.createElement("div");
@@ -176,8 +165,6 @@ class Pokemon {
         leftArrow.addEventListener("click", this.goToPreviousSprite);
         rightArrow.addEventListener("click", this.goToNextSprite);
 
-
-
         let divSprite = document.createElement("div");
         divSprite.className = "pokeSprite spritebg";
 
@@ -188,6 +175,7 @@ class Pokemon {
             let imgSprite = document.createElement("img");
             imgSprite.setAttribute("src", this.spriteIndex[x]);
             divSpriteDisplay.className = "spriteDisplay";
+            divSpriteDisplay.setAttribute("data-spriteIndex", x);
 
             if(x === 0)
             {
@@ -235,6 +223,6 @@ class Pokemon {
 }
 
 
-let bulbasaur = new Pokemon(6);
+let bulbasaur = new Pokemon(151);
 bulbasaur.getAllDetails();
 bulbasaur.renderDOM();
