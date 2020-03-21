@@ -9,6 +9,7 @@ class Pokemon {
         this.dexNum = dexNum;
         this.fetchURL = `${this.baseURL}pokemon/${this.dexNum}/`;
         this.spriteIndex = [];
+        this.moveList = [];
 
     }
 
@@ -45,25 +46,9 @@ class Pokemon {
 
     }
 
-
     assignSpriteIndices()
     {
         //TODO: move all sprite DOM code here..
-
-
-        // let spriteNodes = document.querySelectorAll(".spriteDisplay");
-        // let numSpriteNodes = spriteNodes.length;
-
-        // //assign all nodes data attributes if it hasn't been done already
-        // if(!spriteNodes[0].getAttribute("data-spriteIndex"))
-        // {
-        //     console.log("attribute not found");
-        //     for(let i=0;i<spriteNodes.length;i++)
-        //     {
-        //         spriteNodes[i].setAttribute("data-spriteIndex", i);
-        //     }   
-        // }
-
     }
 
 
@@ -113,8 +98,6 @@ class Pokemon {
         let err = "Flavor text not found";
         for(let i=0;i<this.species.flavor_text_entries.length;i++)
         {
-            // console.log(this.species.flavor_text_entries[i].language);
-   
              if(this.species.flavor_text_entries[i].language.name === "en")
                 {   
                     received = 1;
@@ -126,14 +109,55 @@ class Pokemon {
         return err;
     }
 
+    async getMoveDetails()
+    {
+        let numMoves = this.details.moves.length;
+
+        for(let i=0; i<numMoves;i++)
+        {
+            let move = await fetch(this.details.moves[i].move.url)
+            .then(response => response.json())
+            .then(response => {
+
+                let moveDetails = 
+                {
+                    name: response.name,
+                    type: response.type.name,
+                    power: response.power,
+                    PP: response.pp,
+                    attr: response.damage_class.name,
+                    accuracy: response.accuracy,
+                    effectChance: response.effect_chance,
+                    desc: ""
+                }
+
+                //Find the first English entry..
+                for(let j=0;j<response.flavor_text_entries.length;j++)
+                {
+                    if(response.flavor_text_entries[j].language.name == "en")
+                    {
+                        moveDetails.desc = response.flavor_text_entries[j].flavor_text;
+                        break;
+                    }
+                }
+                
+                return moveDetails;
+            })
+
+            this.moveList.push(move);
+        }
+    }
+
+
+
     async renderDOM()
     {
 
         let vars  = await this.getAllDetails();
-        let vars2  =  await this.getSpecies();
+        vars  =  await this.getSpecies();
+        vars  =  await this.getMoveDetails();
 
         console.log(this);
-        console.log(this.currentIndex, this.nextIndex);
 
         //NAME
         let divName = document.createElement("div");
@@ -195,7 +219,6 @@ class Pokemon {
 
 
         //ABILITIES
-
         let divAbilities = document.createElement("div");
         divAbilities.className = "abilities";
 
@@ -213,16 +236,63 @@ class Pokemon {
             }
         }
 
+        //Modular Content Container
+        let divModularContainer = document.createElement("div");
+        divModularContainer.className = "modularInfoContainer scanlines";
+
+
+        //MOVES
+        let divMoveContainer = document.createElement("div");
+        divMoveContainer.className = "allMovesContainer";
+        let numMoves = this.moveList.length;
+
+       
+        for(let y=0;y<numMoves;y++)
+        {
+            let curMove = document.createElement("div");
+            curMove.className = "singleMoveContainer";
+            
+            let curMoveName = document.createElement("div");
+            curMoveName.className = "singleMoveName";
+            curMoveName.innerHTML = this.moveList[y].name.capitalize();
+
+            let curMoveStats = document.createElement("div");
+            curMoveStats.className = "singleMoveStats";
+            curMoveStats.innerHTML = `Pw: ${this.moveList[y].power} / Ac: ${this.moveList[y].accuracy} / PP: ${this.moveList[y].PP} / At: ${this.moveList[y].attr}`;
+
+            let curMoveType = document.createElement("div");
+            curMoveType.className = "singleMoveType";
+            curMoveType.innerHTML = `Type: ${this.moveList[y].type}`;
+
+            let curMoveDescription = document.createElement("div");
+            curMoveDescription.className = "singleMoveDescription";
+            curMoveDescription.innerHTML = this.moveList[y].desc;
+            
+            curMove.appendChild(curMoveName);
+            curMove.appendChild(curMoveStats);
+            curMove.appendChild(curMoveType);
+            curMove.appendChild(curMoveDescription);           
+
+            divMoveContainer.appendChild(curMove);
+        }
+
+        //append move container to modular container..
+
+        divModularContainer.appendChild(divMoveContainer);
+
+    
+
         document.body.appendChild(divSpriteContainer);
         document.body.appendChild(divName);
         document.body.appendChild(divFlavorText);
         document.body.appendChild(divAbilities);
+        document.body.appendChild(divModularContainer);
 
     }
 
 }
 
 
-let bulbasaur = new Pokemon(151);
+let bulbasaur = new Pokemon(148);
 bulbasaur.getAllDetails();
 bulbasaur.renderDOM();

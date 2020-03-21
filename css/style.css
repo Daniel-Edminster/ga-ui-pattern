@@ -159,7 +159,7 @@ a {
     background: #010101;
     /* background: #072401; */
     max-width: 400px;
-    width:200px;
+    /* width:200px; */
     max-height: 40vh;
     border: 3px solid #494949;
     color: white;
@@ -358,7 +358,9 @@ i {
   }
 
 i:hover {
-    border: solid yellowgreen;
+    /* border: solid yellowgreen;*/
+    /* border: solid */
+    border: solid rgba(255,0,0,0.8);
     border-width: 0 .6em .6em 0;
     cursor: pointer;
 }
@@ -388,13 +390,17 @@ i:hover {
       /* background: rgba(0,0,0,0.5); */
       color: black;
       align-self: center;
+      /* background: rgba(255,0,0,0.5); */
 
 
   }
 
   .arrowContainer {
       /* align-content: center; */
+      /* height: 100%; */
       align-self: center;
+      /* align-content: center; */
+     
   }
 
   .pokeSprite {
@@ -422,3 +428,105 @@ i:hover {
     /* border: 1px solid blue; */
     height: 100%;
 }
+
+.modularInfoContainer {
+        /* background: #010101; */
+        background: #091806;
+        max-width: 400px;
+        width:400px;
+        min-height: 400px;
+        max-height: 40vh;
+        border: 3px solid #494949;
+        color: white;
+        overflow: hidden;
+        text-shadow: 0 0 5px #C8C8C8;
+        margin: 0 auto;
+        border-radius: 1em;
+        font-family: 'pkmn_rbygscregular', 'Courier New', Courier;
+}
+
+
+.allMovesContainer {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow: scroll;
+
+
+}
+
+.singleMoveContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    font-size: 1em;
+    width:100%;
+    max-height: 25%;
+
+}
+
+.singleMoveName {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    color: white;
+    border-bottom: 2px solid white;
+    border-right: 1px solid white;
+    font-size: 1em;
+    text-align: center;
+    /* align-self: center; */
+    padding-top: 20%;
+    padding-bottom: 20%;
+    /* font-size: 140%; */
+
+}
+
+.singleMoveStats {
+    grid-column: 3 / span 2;
+    grid-row: 1;
+    color: white;
+    font-size: .8em;
+    border-bottom: 2px solid White;
+    border-right: 1px solid white;
+    padding: .1em;
+}
+
+.singleMoveType {
+    grid-column: 5;
+    grid-row: 1;
+    border-bottom: 2px solid white;
+    font-size: .8em;
+    color: white;
+    text-align: center;
+    
+}
+
+.singleMoveDescription {
+    grid-column: 1 / span 5;
+    grid-row: 2;
+    color: white;
+    font-size: 0.9em;
+    border-bottom: 1px solid white;
+    padding: .3em;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgb(43, 42, 42); 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #111111; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }

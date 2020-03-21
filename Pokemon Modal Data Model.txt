@@ -1,0 +1,74 @@
+Pokemon Modal Data Model
+
+Crude ascii mockup:
++================================================
+|                                    
+|	+------------------+  +------------------+
+|  	| No.  Name  Ht Wt |  | Move Pwr Type P/S|
+|  	|------------------|  | Desc             |
+|  	|        ===       |  |                  | 
+|  	| <    Sprite    > |  | Ability          |
+|   |        ===       |  |  Desc            |
+| <	|         |        |  |  Evo             |
+|  	| Types:A/B        |  |     1 > 2 > 3    |
+|  	+------------------+  +------------------+
+|  	+==================+  +==================+
+|  	|Flavor text Flavor|  |                  |
+|  	|Text Flavor Text  |  ||A| |M|  |E|  |B| |
+|  	+==================+  +==================+ 
+|
++=======================================================
+
+A = Abilities
+M = Moves
+E = Evolution Chain
+B = Base Stats
+
+
+moveURLs = [];
+tmpMove = "";
+currentPokemonMoves = [];
+for(let i=0;i<this.details.moves.length;i++)
+	
+	let tmpMove = await this.fetchMoveDetails(this.details.moves[i].url)
+	currentPokemonMoves.push(tmpMove);
+}
+
+async fetchMoveDetails(url)
+	let a = await fetch(url)
+	.then(response => response.json())
+	.then(response => {
+
+		moveDetails = 
+		{
+			name: response.name,
+			type: response.type.name,
+			power: response.power
+			attr: response.damage_class.name
+			accuracy: response.accuracy
+		}
+		return moveDetails;
+	})
+	
+
+
+
+class Move
+{
+	constructor(moveID)
+	{
+		this.moveID = moveID
+		this.baseURL = 'https://pokeapi.co/api/v2/move/'
+		this.fetchURL = `{$this.baseURL}${this.moveID}`;
+	}
+
+	async getMoveProperties()
+	{
+		let a = await fetch(this.fetchURL)
+        .then(response => response.json())
+        .then(response => {
+
+        }
+
+	}
+}
