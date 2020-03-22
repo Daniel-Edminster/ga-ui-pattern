@@ -159,16 +159,64 @@ class Pokemon {
 
         console.log(this);
 
-        //NAME
+        //Modal Container
+        let divDexFlexContainer = document.createElement("div");
+        divDexFlexContainer.className ="dexFlexBoxContainer";
+
+        //Modal Left Arrow
+        let divDexFlexLeftArrow = document.createElement("div");
+        divDexFlexLeftArrow.className ="dexFlexLeft";
+
+        //Modal Right Arrow
+        let divDexFlexRightArrow = document.createElement("div");
+        divDexFlexRightArrow.className ="dexFlexRight";
+
+        //Modal Inner Left
+        let divDexFlexInnerLeft = document.createElement("div");
+        divDexFlexInnerLeft.className = "dexFlexInnerLeft";
+
+        //Modal Inner Right
+        let divDexFlexInnerRight = document.createElement("div");
+        divDexFlexInnerRight.className = "dexFlexInnerRight";
+
+
+        //NAME & Descriptors
+        let divDescriptor = document.createElement("div");
+        divDescriptor.className = "pokeDescriptorContainer scanlines";
+
+        let divDescriptorGrid = document.createElement("div");
+        divDescriptorGrid.className = "pokeDescriptorGrid";
+
+
         let divName = document.createElement("div");
         divName.className="pokeName";
         let name = this.details.name.capitalize();
 
+        let pDexNum = document.createElement("p");
+        pDexNum.className = "dexNum";
+        pDexNum.innerHTML = `No. ${this.dexNum}`;
+        let divHeight = document.createElement("div");
+        divHeight.className = "pokeHeight";
+        divHeight.innerHTML = "H: "+ (this.details.height / 10) +"m";
+        let divWeight = document.createElement("div");
+        divWeight.className = "pokeWeight";
+        divWeight.innerHTML = "W: " + (this.details.weight / 10) + "kg";
+        
+
+        divDescriptorGrid.appendChild(divName);
+        divDescriptorGrid.appendChild(divHeight);
+        divDescriptorGrid.appendChild(divWeight);
+        
         //FLAVOR TEXT
         divName.innerHTML = name;
         let divFlavorText = document.createElement("div");
         divFlavorText.className="flavorText";
         divFlavorText.innerHTML= await this.getEnglishFlavorText();
+        divName.appendChild(pDexNum);
+        
+        divDescriptorGrid.appendChild(divFlavorText);
+
+        divDescriptor.appendChild(divDescriptorGrid);
 
         //SPRITES
         this.spriteIndex.push(this.details.sprites.front_default);
@@ -217,7 +265,6 @@ class Pokemon {
 
         }
 
-
         //ABILITIES
         let divAbilities = document.createElement("div");
         divAbilities.className = "abilities";
@@ -240,6 +287,34 @@ class Pokemon {
         let divModularContainer = document.createElement("div");
         divModularContainer.className = "modularInfoContainer scanlines";
 
+        //Modular Buttons
+        //TODO: Turn  into function call...
+        let divModularButtonContainer = document.createElement("div");
+        divModularButtonContainer.className = "modularButtonContainer";
+        
+        let divModularButton = document.createElement("div");
+        divModularButton.className = "modularButtonFlexItem";
+        divModularButton.innerHTML = "<a href=\"#\" class=\"modularButton\" data-access=\"abilities\">Abilities</a>";
+
+        divModularButtonContainer.appendChild(divModularButton);
+
+        divModularButton = document.createElement("div");
+        divModularButton.className = "modularButtonFlexItem";
+        divModularButton.innerHTML = "<a href=\"#\" class=\"modularButton\" data-access=\"moves\">Moves</a>";
+
+        divModularButtonContainer.appendChild(divModularButton);
+
+        divModularButton = document.createElement("div");
+        divModularButton.className = "modularButtonFlexItem";
+        divModularButton.innerHTML = "<a href=\"#\" class=\"modularButton\" data-access=\"evolutions\">Evolutions</a>";
+
+        divModularButtonContainer.appendChild(divModularButton);
+        
+        divModularButton = document.createElement("div");
+        divModularButton.className = "modularButtonFlexItem";
+        divModularButton.innerHTML = "<a href=\"#\" class=\"modularButton\" data-access=\"base-stats\">Base Stats</a>";
+        
+        divModularButtonContainer.appendChild(divModularButton);
 
         //MOVES
         let divMoveContainer = document.createElement("div");
@@ -277,16 +352,42 @@ class Pokemon {
         }
 
         //append move container to modular container..
-
         divModularContainer.appendChild(divMoveContainer);
 
+
+        let hrInnerLeft = document.createElement("hr");
+        let hrInnerRight = document.createElement("hr");
+        let hrInnerRight2 = document.createElement("hr");
+
+        // hrInnerRight2.style.margin="0 auto";
+        // hrInnerRight2.style.width="97%";
     
 
-        document.body.appendChild(divSpriteContainer);
-        document.body.appendChild(divName);
-        document.body.appendChild(divFlavorText);
+        divDexFlexInnerLeft.appendChild(divSpriteContainer);
+        divDexFlexInnerLeft.appendChild(hrInnerLeft);
+        divDexFlexInnerLeft.appendChild(divDescriptor);
+  
+        divDexFlexInnerRight.appendChild(divModularContainer);
+        divDexFlexInnerRight.appendChild(hrInnerRight);
+        divDexFlexInnerRight.appendChild(divModularButtonContainer);
+         divDexFlexInnerRight.appendChild(hrInnerRight2);
+
+
+        divDexFlexContainer.appendChild(divDexFlexLeftArrow);
+        divDexFlexContainer.appendChild(divDexFlexInnerLeft);
+        divDexFlexContainer.appendChild(divDexFlexInnerRight);
+        divDexFlexContainer.appendChild(divDexFlexRightArrow);
+
+
+        document.body.appendChild(divDexFlexContainer);
+
+        // document.body.appendChild(divSpriteContainer);
+        // document.body.appendChild(divName);
+        // document.body.appendChild(divFlavorText);
+        // document.body.appendChild(divDescriptor);
         document.body.appendChild(divAbilities);
-        document.body.appendChild(divModularContainer);
+        // document.body.appendChild(divModularContainer);
+        // document.body.appendChild(divModularButtonContainer);
 
     }
 

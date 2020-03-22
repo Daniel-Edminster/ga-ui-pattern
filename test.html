@@ -4,10 +4,11 @@
         <link rel="stylesheet" href="css/scanlines.css" />
         <link rel="stylesheet" href="css/style.css" />
     </head>
-    <body>
+    <body style="background-color:rgba(0,0,0,0.5);">
 
         <script src="js/class.pokemon.js"></script>
 
+        <!-- <div class="manshadow"></div> -->
 
         <!-- <script src="js/p.pokemon.js"></script> -->
     </body>
@@ -16,9 +17,17 @@
         window.onload = () => {
 
             setTimeout(() => {
-            let pk = document.querySelector(".spriteContainer");
-             pk.style.minWidth="400px";
-             pk.style.minHeight="400px";
+            // let pk = document.querySelector(".spriteContainer");
+            //  pk.style.minWidth="400px";
+            //  pk.style.minHeight="400px";
+
+            document.querySelector(".dexFlexLeft").innerHTML = `
+                    <div class="dex-box-blue-circle"></div>
+                    <div class="small-red-dot"></div>
+                    <div class="small-yellow-dot"></div>
+                    <div class="small-green-dot"></div>`;
+
+            // document.querySelector("")
                 
             }, 3000);
 
