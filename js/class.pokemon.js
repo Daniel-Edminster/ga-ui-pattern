@@ -10,6 +10,10 @@ class Pokemon {
         this.fetchURL = `${this.baseURL}pokemon/${this.dexNum}/`;
         this.spriteIndex = [];
         this.moveList = [];
+        // this.DOMobjects = [0,1,2,3];
+
+        this.getAllDetails();
+        this.renderDOM();
 
     }
 
@@ -108,6 +112,93 @@ class Pokemon {
         
         return err;
     }
+    
+    getAndArrangeTypes()
+    {
+        let numTypes = this.details.types.length;
+        let orderedTypes = [];
+        let slot = 1;
+
+        for(let i=0;i<numTypes;i++)
+        {
+            orderedTypes[this.details.types[i].slot -1] = this.details.types[i].type.name.toUpperCase();
+        }
+
+        return orderedTypes;
+    }
+    
+    async getAbilityDetails(url)
+    {
+        let abilityDescription;
+        let c = await fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            for(let i=0;i<response.effect_entries.length;i++)
+            {
+
+                if(response.effect_entries[i].language.name === "en")
+                {
+                    abilityDescription = response.effect_entries[i].short_effect;
+                    break;
+                }
+            }      
+     
+        });
+
+        return abilityDescription;
+
+    }
+
+    async getEvolutionChain()
+    {
+        url = this.species.evolution_chain.url;
+
+        let d = await fetch(url)
+        .then(response => response.json())
+        .then(response => {
+
+
+        })
+
+        return d;
+    }
+
+    changeModularContent()
+    {
+
+        // if(!event) 
+        // {
+        //     let event = window.event();
+        //     console.log(event);
+        //     let display = event.target.getAttribute("data-access");
+        // }
+        
+        let storedViews = document.querySelector(".storedViews").value;
+        let viewArray = storedViews.split("|||");
+
+        console.log("storedViews: ", viewArray);
+
+        let display = event.target.getAttribute("data-access");
+
+        switch (display)
+        {
+            case "abilities":
+                document.querySelector(".modularInfoContainer").innerHTML = viewArray[0];
+                break;
+
+            case "moves":
+                document.querySelector(".modularInfoContainer").innerHTML = viewArray[1];
+                break;
+
+
+        }
+
+
+
+    }
+
+
+
 
     async getMoveDetails()
     {
@@ -147,6 +238,7 @@ class Pokemon {
             this.moveList.push(move);
         }
     }
+
 
 
 
@@ -190,7 +282,7 @@ class Pokemon {
 
         let divName = document.createElement("div");
         divName.className="pokeName";
-        let name = this.details.name.capitalize();
+        let name = this.details.name.toUpperCase();
 
         let pDexNum = document.createElement("p");
         pDexNum.className = "dexNum";
@@ -201,11 +293,15 @@ class Pokemon {
         let divWeight = document.createElement("div");
         divWeight.className = "pokeWeight";
         divWeight.innerHTML = "W: " + (this.details.weight / 10) + "kg";
+        let divType = document.createElement("div");
+        divType.className = "pokeType";
+        divType.innerHTML = `TYPE: ${this.getAndArrangeTypes().join("/")}`;
         
 
         divDescriptorGrid.appendChild(divName);
         divDescriptorGrid.appendChild(divHeight);
         divDescriptorGrid.appendChild(divWeight);
+        divDescriptorGrid.appendChild(divType);
         
         //FLAVOR TEXT
         divName.innerHTML = name;
@@ -269,19 +365,39 @@ class Pokemon {
         let divAbilities = document.createElement("div");
         divAbilities.className = "abilities";
 
-        let abilityItem;
+        let abilityName;
+        let abilityDescription;
+        let abilityDescriptionList = document.createElement("dl");
+
         if(Array.isArray(this.details.abilities))
         {
             for(let i=0;i<this.details.abilities.length;i++)
             {
-                abilityItem = document.createElement("div");
-                abilityItem.className= "abilityItem";
-                abilityItem.setAttribute("data-ability-index", i);
-                abilityItem.innerHTML = this.details.abilities[i].ability.name;
-                divAbilities.appendChild(abilityItem);
+                abilityName = document.createElement("dt");
+                abilityName.className = "abilityName";
+                abilityName.setAttribute("data-ability-index", i);
+                abilityName.innerHTML = this.details.abilities[i].ability.name.capitalize();
+                abilityDescription = document.createElement("dd");
+                abilityDescription.className = "abilityDescription";
+                abilityDescription.setAttribute("data-ability-index", i);
+
+                abilityDescription.innerHTML = await this.getAbilityDetails(this.details.abilities[i].ability.url);
+
+                abilityDescriptionList.appendChild(abilityName);
+                abilityDescriptionList.appendChild(abilityDescription);
 
             }
         }
+        divAbilities.appendChild(abilityDescriptionList);
+
+        if(this.DOMobjects == null)
+        {
+            this.DOMobjects = [divAbilities];
+        }
+        else {
+            this.DOMobjects.push(divAbilities);
+        }
+
 
         //Modular Content Container
         let divModularContainer = document.createElement("div");
@@ -295,25 +411,30 @@ class Pokemon {
         let divModularButton = document.createElement("div");
         divModularButton.className = "modularButtonFlexItem";
         divModularButton.innerHTML = "<a href=\"#\" class=\"modularButton\" data-access=\"abilities\">Abilities</a>";
+        divModularButton.addEventListener("click", this.changeModularContent);
+
 
         divModularButtonContainer.appendChild(divModularButton);
 
         divModularButton = document.createElement("div");
         divModularButton.className = "modularButtonFlexItem";
         divModularButton.innerHTML = "<a href=\"#\" class=\"modularButton\" data-access=\"moves\">Moves</a>";
+        divModularButton.addEventListener("click", this.changeModularContent);
 
         divModularButtonContainer.appendChild(divModularButton);
 
         divModularButton = document.createElement("div");
         divModularButton.className = "modularButtonFlexItem";
         divModularButton.innerHTML = "<a href=\"#\" class=\"modularButton\" data-access=\"evolutions\">Evolutions</a>";
+        divModularButton.addEventListener("click", this.changeModularContent);
 
         divModularButtonContainer.appendChild(divModularButton);
         
         divModularButton = document.createElement("div");
         divModularButton.className = "modularButtonFlexItem";
         divModularButton.innerHTML = "<a href=\"#\" class=\"modularButton\" data-access=\"base-stats\">Base Stats</a>";
-        
+        divModularButton.addEventListener("click", this.changeModularContent);
+
         divModularButtonContainer.appendChild(divModularButton);
 
         //MOVES
@@ -351,6 +472,8 @@ class Pokemon {
             divMoveContainer.appendChild(curMove);
         }
 
+        this.DOMobjects.push(divMoveContainer);
+
         //append move container to modular container..
         divModularContainer.appendChild(divMoveContainer);
 
@@ -358,9 +481,8 @@ class Pokemon {
         let hrInnerLeft = document.createElement("hr");
         let hrInnerRight = document.createElement("hr");
         let hrInnerRight2 = document.createElement("hr");
+        let hrInnerRight3 = document.createElement("hr");
 
-        // hrInnerRight2.style.margin="0 auto";
-        // hrInnerRight2.style.width="97%";
     
 
         divDexFlexInnerLeft.appendChild(divSpriteContainer);
@@ -370,7 +492,8 @@ class Pokemon {
         divDexFlexInnerRight.appendChild(divModularContainer);
         divDexFlexInnerRight.appendChild(hrInnerRight);
         divDexFlexInnerRight.appendChild(divModularButtonContainer);
-         divDexFlexInnerRight.appendChild(hrInnerRight2);
+        divDexFlexInnerRight.appendChild(hrInnerRight2);
+        divDexFlexInnerRight.appendChild(hrInnerRight3);
 
 
         divDexFlexContainer.appendChild(divDexFlexLeftArrow);
@@ -379,21 +502,35 @@ class Pokemon {
         divDexFlexContainer.appendChild(divDexFlexRightArrow);
 
 
-        document.body.appendChild(divDexFlexContainer);
+        let modalCover = document.querySelector(".modal-cover");
+        modalCover.style.display = "block";
+        modalCover.appendChild(divDexFlexContainer);
+        // document.body.appendChild(divDexFlexContainer);
 
-        // document.body.appendChild(divSpriteContainer);
-        // document.body.appendChild(divName);
-        // document.body.appendChild(divFlavorText);
-        // document.body.appendChild(divDescriptor);
-        document.body.appendChild(divAbilities);
-        // document.body.appendChild(divModularContainer);
-        // document.body.appendChild(divModularButtonContainer);
+
+        let DOMstoreElement = document.createElement("input");
+        DOMstoreElement.setAttribute("type","hidden");
+        DOMstoreElement.className="storedViews";
+
+        // let DOMjson = [];
+
+        let hiddenContent = [];
+
+
+        for(let z=0;z<this.DOMobjects.length;z++)
+        {
+ 
+            hiddenContent.push( this.DOMobjects[z].outerHTML );
+        }
+    
+        DOMstoreElement.value = hiddenContent.join("|||");
+
+        document.body.appendChild(DOMstoreElement);
 
     }
 
 }
 
 
-let bulbasaur = new Pokemon(148);
-bulbasaur.getAllDetails();
-bulbasaur.renderDOM();
+// let bulbasaur = new Pokemon(545);
+

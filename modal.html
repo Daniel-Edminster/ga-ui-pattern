@@ -7,36 +7,9 @@
         <link href="css/scanlines.css" rel="stylesheet">
     </head>
     <body>
-        <!-- <div class="modal-cover">
-            <div class="modal-container">
-                <div class="dex-box-curve">
-                    <div class="dex-box-blue-circle"></div>
-                    <div class="small-red-dot"></div>
-                    <div class="small-yellow-dot"></div>
-                    <div class="small-green-dot"></div>
+        <div class="modal-cover">
 
-                </div>
-
-
-                <div class="modal-screen-left-container">
-                    <div class="modal-screen-left scanlines">
-                        <div class="spritebg">
-                            <img class="dex-screen-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png" />
-                        </div>
-                    </div>
-                    <hr >
-                    <div class="flavorText">
-                        There is a large flower on Venusaur’s back. The flower is said
-to take on vivid colors if it gets plenty of nutrition and sunlight.
-The flower’s aroma soothes the emotions of people.
-
-
-                    </div>
-                    
-
-                </div>
-            </div>
-        </div> -->
+        </div>
 <div class="navbar">
     <div class="navbar-content">
         <div class="navbar-item">Home</div>
@@ -59,5 +32,45 @@ The flower’s aroma soothes the emotions of people.
 </div>
 <br />
         <script src="js/api.js"></script>
+        <script src="js/class.pokemon.js"></script>
+
+        <script>
+
+            window.onload = function()
+            {
+
+                let pk = document.querySelector("#pkmn");
+
+                pk.addEventListener("click", function(event)
+                {
+                    let dex = event.target.parentNode.getAttribute("data-dexnum");
+
+                    document.querySelector(".modal-cover").style.display="block";
+                    let p = new Pokemon(dex);
+  
+
+                });
+
+
+
+            }
+
+            // let modalExit = document.querySelector(".modal-cover");
+
+            // modalExit.addEventListener("click", function()
+            // {
+            //     if(modalExit.hasChildNodes)
+            //     {
+            //             modalExit.innerHTML = "";
+            //             modalExit.style.display="none";
+                   
+            //     }
+            // });
+
+
+
+
+
+        </script>
     </body>
 </html>
