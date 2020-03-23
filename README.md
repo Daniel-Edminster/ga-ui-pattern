@@ -9,5 +9,5 @@
 - Extensive Data on Gen I &amp; Gen II Pokemon
     (Flavor Text, Height, Weight, Abilities, Sprites, Moves, Evolutions)
 - Thematically styled using Pokemon colors
-- LocalStorage Cache to speed up load time
+- ~~LocalStorage Cache to speed up load time~~ (in progress)
 
