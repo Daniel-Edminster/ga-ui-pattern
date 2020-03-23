@@ -2,12 +2,20 @@
 <html>
     <head>
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+        <link href="css/fonts.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/scanlines.css" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/71dcca77ea.js" crossorigin="anonymous"></script>
     </head>
     <body>
+        <div class="modal-cover">
+
+        </div>
 <div class="navbar">
     <div class="navbar-content">
-        <div class="navbar-logo"><img src="img/pokeball.png" /></div>
+        <div class="navbar-logo">
+            <img src="img/pokeball-icon-small.png">
+        </div>
         <div class="navbar-item active">Home</div>
         <div class="navbar-item"><a href="modal.html">Modal</a></div>
         <div class="navbar-item">Menu</div>
@@ -18,8 +26,56 @@
 </div>
 
 
-<!-- <div id="pkmn"></div>
 
-        <script src="js/api.js"></script> -->
+
+<div class="modal-gallery" style="background-color: #f3fcff;">
+<div id="pkmn">
+    <!-- Pokeball by Clint Hess https://dribbble.com/shots/6124573-Pokeball/attachments/1313609 -->
+<img  src="https://cdn.dribbble.com/users/1771704/screenshots/6124573/attachments/1313609/pokeball.gif" class="loading">
+</div>
+</div>
+<br />
+        <script src="js/api.js"></script>
+        <script src="js/class.pokemon.js"></script>
+
+        <script>
+
+        function closeModal()
+        {
+ 
+            let mc = document.querySelector(".modal-cover");
+            mc.innerHTML="";
+            mc.style.display="none";
+
+        }
+
+
+        window.onload = function()
+        {
+
+            let pk = document.querySelector("#pkmn");
+
+            pk.addEventListener("click", function(event)
+            {
+                let dex = event.target.parentNode.getAttribute("data-dexnum");
+
+                document.querySelector(".modal-cover").style.display="block";
+                let p = new Pokemon(dex);
+
+                setTimeout(() => {}, 2500);
+
+
+            });
+
+
+
+         }
+
+  
+
+
+
+
+        </script>
     </body>
 </html>

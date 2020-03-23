@@ -165,18 +165,11 @@ class Pokemon {
 
     changeModularContent()
     {
-
-        // if(!event) 
-        // {
-        //     let event = window.event();
-        //     console.log(event);
-        //     let display = event.target.getAttribute("data-access");
-        // }
         
         let storedViews = document.querySelector(".storedViews").value;
         let viewArray = storedViews.split("|||");
 
-        console.log("storedViews: ", viewArray);
+        // console.log("storedViews: ", viewArray);
 
         let display = event.target.getAttribute("data-access");
 
@@ -193,11 +186,7 @@ class Pokemon {
 
         }
 
-
-
     }
-
-
 
 
     async getMoveDetails()
@@ -239,7 +228,37 @@ class Pokemon {
         }
     }
 
+    renderExtraDexUI()
+    {
+        
+        document.querySelector(".dexFlexLeft").innerHTML = `
+        <div class="outerDexGridLeft">
+            <div class="outerDexGridLeftTop">
+                <div class="dex-box-blue-circle"></div>
+                <div class="small-red-dot"></div>
+                <div class="small-yellow-dot"></div>
+                <div class="small-green-dot"></div>
+            </div>
+            <div class="outerDexGridLeftMiddle">
+                <div class="outerArrowContainer">
+            
+                </div>
+            </div>
 
+
+        </div>`;
+
+        document.querySelector(".dexFlexRight").innerHTML = `
+        <div class="outerDexGridRight">
+            <div class="outerDexGridRightTop">
+                <a href="#" class="closeModal"><i class="fas fa-power-off" style="color: white; font-size: 1.8em; text-align: center;"></i></a>
+            </div>
+            <div class="outerDexGridRightMiddle"></div>
+            </div>`;
+
+        
+        document.querySelector(".closeModal").addEventListener("click", closeModal);
+    }
 
 
     async renderDOM()
@@ -527,10 +546,8 @@ class Pokemon {
 
         document.body.appendChild(DOMstoreElement);
 
+        this.renderExtraDexUI();
     }
 
 }
-
-
-// let bulbasaur = new Pokemon(545);
 
