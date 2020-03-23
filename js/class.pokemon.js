@@ -527,6 +527,12 @@ class Pokemon {
         // document.body.appendChild(divDexFlexContainer);
 
 
+        let lastView = document.querySelector(".storedViews");
+        if(lastView !== null)
+        {
+            document.body.removeChild(lastView);
+        }
+        
         let DOMstoreElement = document.createElement("input");
         DOMstoreElement.setAttribute("type","hidden");
         DOMstoreElement.className="storedViews";
@@ -550,4 +556,3 @@ class Pokemon {
     }
 
 }
-
